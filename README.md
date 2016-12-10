@@ -72,5 +72,6 @@ The output above uses shows the example patch from https://github.com/dynup/kpat
 
 This repo has 2 commands in it.
 
-1 `build-original.sh`, which rebuilds the kernel source used for RancherOS v0.7.0 with DEBUG_INFO on, and saves the resulting container image (35GB)
-2 `build-kpatch.sh`, which then uses that build to create a kpatch module, and then builds a small ubuntu based container that when run in privileged mode will load the kernel patch module.
+1. `build-original.sh`, which rebuilds the kernel source used for RancherOS v0.7.0 with DEBUG_INFO on, 
+   *You need to* commit the resulting container image (35GB): `docker commit <dapper-container> rancherbuild/os-kernel:linux-4.4.21-rancher-debug`
+2. `build-kpatch.sh`, which then uses that build to create a kpatch module, and then builds a small ubuntu based container that when run in privileged mode will load the kernel patch module.
