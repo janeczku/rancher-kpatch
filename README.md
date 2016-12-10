@@ -1,6 +1,6 @@
 # rancher-kpatch
 
-On a fresh RancherOS 0.7.0 system, we can live patch the kernel using a Docker container:
+On a fresh RancherOS 0.7.0 system, we can live patch the kernel using a RancherOS service:
 
 ```
 [root@ip-172-31-2-194 rancher]# ros service enable https://raw.githubusercontent.com/SvenDowideit/rancher-kpatch/master/os-mypatch/service.yml
@@ -75,3 +75,5 @@ This repo has 2 commands in it.
 1. `build-original.sh`, which rebuilds the kernel source used for RancherOS v0.7.0 with DEBUG_INFO on, 
    *You need to* commit the resulting container image (35GB): `docker commit <dapper-container> rancherbuild/os-kernel:linux-4.4.21-rancher-debug`
 2. `build-kpatch.sh`, which then uses that build to create a kpatch module, and then builds a small ubuntu based container that when run in privileged mode will load the kernel patch module.
+
+> *NOTE:* the `build-original.sh` script uses an unreleased feature of `dapper` (`--keep`: don't delete the dapper container at the end of the build), so you need to use the version in this repository.
