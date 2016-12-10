@@ -1,0 +1,12 @@
+#!/bin/sh
+set -ex
+
+cd $(dirname $0)/..
+cat service.yml | envsubst > dist/mypatch.yml
+cat Dockerfile.service | envsubst > dist/Dockerfile
+cp loadkpatch dist/
+
+cp /usr/local/sbin/kpatch dist
+cp /source/kpatch/kmod/core/kpatch.ko dist
+
+# and then run docker build

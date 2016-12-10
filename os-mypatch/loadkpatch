@@ -1,0 +1,5 @@
+#!/bin/sh
+set -ex
+
+insmod /kpatch.ko
+/kpatch load kpatch-mypatch.ko

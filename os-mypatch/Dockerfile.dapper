@@ -1,0 +1,23 @@
+FROM rancher/os-kernel-kpatch:4.4.21-rancher1-1
+
+ENV DAPPER_SOURCE /kpatch
+ENV DAPPER_OUTPUT dist
+WORKDIR  $DAPPER_SOURCE
+
+RUN cp -r /source/scripts .
+
+
+COPY mypatch.diff .
+RUN mkdir dist \
+    && cd dist \
+    && kpatch-build --sourcedir /lib/modules/4.4.21-rancher/build \
+                 --vmlinux /lib/modules/4.4.21-rancher/build/vmlinux \
+                 /kpatch/mypatch.diff 
+
+#CMD ["kpatch-build", "--sourcedir", "/lib/modules/4.4.21-rancher/build", "mypatch.diff", "--vmlinux", "/lib/modules/4.4.21-rancher/build/vmlinux"]
+
+# TODO: move to the kpatch Dockerfile - i don't want to bust the cache atm
+RUN apt-get install -yq gettext
+
+COPY scripts/build /kpatch/scripts/
+CMD ["./scripts/build"]

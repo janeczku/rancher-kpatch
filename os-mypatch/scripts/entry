@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+mkdir -p bin
+if [ -e ./scripts/$1 ]; then
+    ./scripts/"$@"
+else
+    "$@"
+fi
+
+rm -f $HOME/.bash_history

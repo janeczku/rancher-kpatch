@@ -1,0 +1,57 @@
+diff --git a/kmod/core/core.c b/kmod/core/core.c
+index 60603ca..8b96e4d 100644
+--- a/kmod/core/core.c
++++ b/kmod/core/core.c
+@@ -676,7 +676,7 @@ static int kpatch_write_relocations(struct kpatch_module *kpmod,
+ 	int ret, size, readonly = 0, numpages;
+ 	struct kpatch_dynrela *dynrela;
+ 	u64 loc, val;
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0)
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 0, 0)
+        unsigned long core = (unsigned long)kpmod->mod->core_layout.base;
+        unsigned long core_size = kpmod->mod->core_layout.size;
+ #else
+@@ -746,7 +746,7 @@ static int kpatch_write_relocations(struct kpatch_module *kpmod,
+ 		}
+ 
+ #ifdef CONFIG_DEBUG_SET_MODULE_RONX
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0)
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 0, 0)
+                if (loc < core + kpmod->mod->core_layout.ro_size)
+ #else
+                if (loc < core + kpmod->mod->core_ro_size)
+diff --git a/kmod/patch/livepatch-patch-hook.c b/kmod/patch/livepatch-patch-hook.c
+index 327ec93..9c8d439 100644
+--- a/kmod/patch/livepatch-patch-hook.c
++++ b/kmod/patch/livepatch-patch-hook.c
+@@ -238,7 +238,7 @@ static int __init patch_init(void)
+ 			lfunc = &lfuncs[j];
+ 			lfunc->old_name = func->kfunc->name;
+ 			lfunc->new_func = (void *)func->kfunc->new_addr;
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0)
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 0, 0)
+ 			lfunc->old_sympos = func->kfunc->sympos;
+ #else
+ 			lfunc->old_addr = func->kfunc->old_addr;
+@@ -255,7 +255,7 @@ static int __init patch_init(void)
+ 		list_for_each_entry(reloc, &object->relocs, list) {
+ 			lreloc = &lrelocs[j];
+ 			lreloc->loc = reloc->kdynrela->dest;
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0)
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 0, 0)
+ 			lreloc->sympos = reloc->kdynrela->sympos;
+ #else
+ 			lreloc->val = reloc->kdynrela->src;
+diff --git a/kpatch-build/kpatch-build b/kpatch-build/kpatch-build
+index ac9c904..2a2c74b 100755
+--- a/kpatch-build/kpatch-build
++++ b/kpatch-build/kpatch-build
+@@ -333,7 +333,7 @@ fi
+ PATCHNAME=$(echo ${PATCHNAME//[^a-zA-Z0-9_-]/-} |cut -c 1-48)
+ 
+ source /etc/os-release
+-DISTRO=$ID
++DISTRO="rancher"
+ if [[ $DISTRO = fedora ]] || [[ $DISTRO = rhel ]] || [[ $DISTRO = ol ]] || [[ $DISTRO = centos ]]; then
+ 	[[ -z $VMLINUX ]] && VMLINUX=/usr/lib/debug/lib/modules/$ARCHVERSION/vmlinux
+ 	[[ -e "$VMLINUX" ]] || die "kernel-debuginfo-$ARCHVERSION not installed"
