@@ -2,7 +2,10 @@
 set -ex
 
 cd $(dirname $0)/..
-cat service.yml | envsubst > dist/mypatch.yml
+
+export PATCH="dirtycow"
+
+cat service.yml | envsubst > dist/dirtycow.yml
 cat Dockerfile.service | envsubst > dist/Dockerfile
 cp loadkpatch dist/
 

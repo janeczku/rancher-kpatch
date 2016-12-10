@@ -7,14 +7,14 @@ WORKDIR  $DAPPER_SOURCE
 RUN cp -r /source/scripts .
 
 
-COPY mypatch.diff .
+COPY dirtycow.patch .
 RUN mkdir dist \
     && cd dist \
     && kpatch-build --sourcedir /lib/modules/4.4.21-rancher/build \
                  --vmlinux /lib/modules/4.4.21-rancher/build/vmlinux \
-                 /kpatch/mypatch.diff 
+                 /kpatch/dirtycow.patch 
 
-#CMD ["kpatch-build", "--sourcedir", "/lib/modules/4.4.21-rancher/build", "mypatch.diff", "--vmlinux", "/lib/modules/4.4.21-rancher/build/vmlinux"]
+#CMD ["kpatch-build", "--sourcedir", "/lib/modules/4.4.21-rancher/build", "dirtycow.patch", "--vmlinux", "/lib/modules/4.4.21-rancher/build/vmlinux"]
 
 # TODO: move to the kpatch Dockerfile - i don't want to bust the cache atm
 RUN apt-get install -yq gettext

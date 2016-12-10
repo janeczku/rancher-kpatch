@@ -2,6 +2,7 @@
 set -ex
 
 # prepare rancher/os-kernel-build:4.4.21-rancher1-1
+# aka Ubuntu-4.4.0-42.62-rancher1
 if [ ! -d os-kernel ]; then
 	git clone https://github.com/rancher/os-kernel
 	cd os-kernel
