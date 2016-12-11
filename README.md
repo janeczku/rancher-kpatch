@@ -2,6 +2,12 @@
 
 On a fresh RancherOS 0.7.0 system, we can live patch the kernel using a Docker container:
 
+for dirtycow, test with
+
+```
+docker run --rm -it ictu/dirtycow-tester
+```
+
 ```
 [root@ip-172-31-2-194 rancher]# ros service enable https://raw.githubusercontent.com/SvenDowideit/rancher-kpatch/master/os-mypatch/service.yml
 Pulling mykpatch (roast/mykpatch:0.7.0)...
