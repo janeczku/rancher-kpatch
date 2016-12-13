@@ -10,7 +10,7 @@ RUN apt-get update \
                            gawk
 
 RUN mkdir -p /lib/modules/4.4.21-rancher \
-    && ln -s /usr/src/09a763a/ /lib/modules/4.4.21-rancher/build
+    && ln -s /usr/src/$(ls /usr/src | tr -d '\n')/ /lib/modules/4.4.21-rancher/build
 
 
 # get the kpatch-build tool
