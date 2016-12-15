@@ -1,5 +1,5 @@
 mykpatch:
-  image: roast/mykpatch:0.7.0
+  image: janeczku/mykpatch:0.7.0
   #command: ros console-init
   privileged: true
   labels:
