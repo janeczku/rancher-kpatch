@@ -11,5 +11,5 @@ cd os-mypatch
 
 # build a small Ubuntu container that can kpatch load it
 cd dist
-docker build -t roast/mykpatch:0.7.0 .
-docker push roast/mykpatch:0.7.0
+docker build -t janeczku/mykpatch:0.7.0 .
+docker push janeczku/mykpatch:0.7.0
